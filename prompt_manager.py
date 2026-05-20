@@ -23,3 +23,18 @@ class PromptManager:
             prompt_data = yaml.safe_load(f)
         
         return prompt_data
+    
+    def compile_prompt(self, prompt_data: Dict[str, Any]) -> str:
+        """
+        Compile the prompt data into a single string.
+        """
+        system_prompt = prompt_data.get("system_prompt", "")
+        user_instructions = prompt_data.get("user_instructions", "")
+        example_interactions = prompt_data.get("example_interactions", [])
+        
+        compiled_prompt = system_prompt + "\n\n" + user_instructions + "\n\n"
+        
+        for interaction in example_interactions:
+            compiled_prompt += f"User: {interaction['user']}\nAgent: {interaction['agent']}\n\n"
+        
+        return compiled_prompt
