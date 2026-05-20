@@ -182,7 +182,8 @@ def safe_agent_invoke(user_input: str, defended_prompt: ChatPromptTemplate) -> I
     # Layer 2: Hardened prompt — LLM-level defense
     messages = defended_prompt.format_messages(user_input=user_input)
     
-    raw_response = guarded_invoke(messages)
+    # raw_response = guarded_invoke(messages)
+    raw_response = budget_aware_invoke(tracker, messages)
     # raw_response = production_invoke(messages)
     if not raw_response.success:
         return raw_response
